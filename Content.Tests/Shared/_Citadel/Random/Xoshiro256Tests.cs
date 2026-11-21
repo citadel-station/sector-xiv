@@ -19,6 +19,29 @@ public sealed class Xoshiro256Tests(ulong seed)
         AssertSameSequence(first, second);
     }
 
+    [Test]
+    public void BiasCheck()
+    {
+        var random = new Xoshiro256(seed);
+        var counts = new uint[64];
+
+        const ulong iterations = 10_000_000;
+        for (ulong i = 0; i < iterations; i++)
+        {
+            var value = random.Next() % (ulong)counts.Length;
+            counts[value]++;
+        }
+
+        var expected = iterations / (ulong)counts.Length;
+        for (var value = 0; value < counts.Length; value++)
+        {
+            var actual = counts[value];
+            var ratio = (double)actual / expected;
+            Assert.That(ratio, Is.InRange(0.99, 1.01),
+                $"Value {value} is outside of the expected range. Expected {expected}, got {actual}.");
+        }
+    }
+
     [TestCase(5UL)]
     [TestCase(10UL)]
     [TestCase(20UL)]
