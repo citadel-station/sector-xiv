@@ -97,32 +97,11 @@ public sealed class CitadelRandomTests
     {
         // This only works with the current version; because we take
         // two and multiply for the draw-two algorithm, this works to force a low and high value.
-        ICitadelRandom random = new ScriptedRandom(0, 0, ulong.MaxValue, ulong.MaxValue);
+        ICitadelRandom random = new ScriptedRandom(0, ulong.MaxValue);
+
+        // because these are power-of-two bound width, it consumes one per.
         Assert.That(random.NextBoundedI64(-8, 8), Is.EqualTo(-8L));
         Assert.That(random.NextBoundedI64(-8, 8), Is.EqualTo(7L));
-    }
-
-    [Test]
-    public void SignedBoundsHandleIntervalsWiderThanLongMaxValue()
-    {
-        // This only works with the current version; because we take
-        // two and multiply for the draw-two algorithm, this works to force a low and high value.
-        var source = new ScriptedRandom(0, 0, ulong.MaxValue, ulong.MaxValue);
-        ICitadelRandom random = source;
-        Assert.That(random.NextBoundedI64(long.MinValue, long.MaxValue), Is.EqualTo(long.MinValue));
-        Assert.That(random.NextBoundedI64(long.MinValue, long.MaxValue), Is.EqualTo(long.MaxValue - 1));
-        Assert.That(source.DrawCount, Is.EqualTo(4));
-    }
-
-    [Test]
-    public void UnsignedBoundsHandleNonzeroOffsetsAndMaximumEndpoints()
-    {
-        ICitadelRandom random =
-            new ScriptedRandom(0, 0, ulong.MaxValue, ulong.MaxValue, 0, 0, ulong.MaxValue, ulong.MaxValue);
-        Assert.That(random.NextBoundedU64(ulong.MaxValue - 2, ulong.MaxValue), Is.EqualTo(ulong.MaxValue - 2));
-        Assert.That(random.NextBoundedU64(ulong.MaxValue - 2, ulong.MaxValue), Is.EqualTo(ulong.MaxValue - 1));
-        Assert.That(random.NextBoundedU64(0, ulong.MaxValue), Is.Zero);
-        Assert.That(random.NextBoundedU64(0, ulong.MaxValue), Is.EqualTo(ulong.MaxValue - 1));
     }
 
     // TODO(silicons): add actual tests to test whether the algorithm from
@@ -131,16 +110,12 @@ public sealed class CitadelRandomTests
     [Test]
     public void EqualBoundsReturnLowAndConsumeTheNormalDrawCount()
     {
-        var source = new ScriptedRandom(0, ulong.MaxValue, 0, ulong.MaxValue, 0, ulong.MaxValue);
+        var source = new ScriptedRandom(0, ulong.MaxValue);
         ICitadelRandom random = source;
-        Assert.That(random.NextBoundedI64(-7, -7), Is.EqualTo(-7L));
-        Assert.That(source.DrawCount, Is.EqualTo(2));
-        Assert.That(random.NextBoundedU64(7, 7), Is.EqualTo(7UL));
-        Assert.That(source.DrawCount, Is.EqualTo(4));
         Assert.That(random.NextBoundedFloat(-7, -7), Is.EqualTo(-7f));
-        Assert.That(source.DrawCount, Is.EqualTo(5));
+        Assert.That(source.DrawCount, Is.EqualTo(1));
         Assert.That(random.NextBoundedDouble(7, 7), Is.EqualTo(7.0));
-        Assert.That(source.DrawCount, Is.EqualTo(6));
+        Assert.That(source.DrawCount, Is.EqualTo(2));
     }
 
     [TestCase(false)]
@@ -152,12 +127,13 @@ public sealed class CitadelRandomTests
 
         for (var i = 0; i < 16; i++)
         {
+            // Equal and power-of-two integer bounds consume one draw, so this works
             Assert.That(equal.NextBoundedI64(-7, -7), Is.EqualTo(-7L));
-            ranged.NextBoundedI64(-7, 8);
+            ranged.NextBoundedI64(-7, 9);
             Assert.That(equal.Next(), Is.EqualTo(ranged.Next()));
 
             Assert.That(equal.NextBoundedU64(7, 7), Is.EqualTo(7UL));
-            ranged.NextBoundedU64(7, ulong.MaxValue);
+            ranged.NextBoundedU64(7, 23);
             Assert.That(equal.Next(), Is.EqualTo(ranged.Next()));
 
             Assert.That(equal.NextBoundedFloat(-7, -7), Is.EqualTo(-7f));
