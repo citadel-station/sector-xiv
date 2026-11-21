@@ -59,6 +59,11 @@ public sealed class Xoshiro256 : ICitadelRandom
         return result;
     }
 
+    ICitadelRandom ICitadelRandom.Clone()
+    {
+        return Clone();
+    }
+
     /// <summary>
     /// Rotates the bits of a 64-bit unsigned integer to the left by a specified number of positions.
     /// </summary>
@@ -77,11 +82,6 @@ public sealed class Xoshiro256 : ICitadelRandom
     public Xoshiro256 Clone()
     {
         return (Xoshiro256)MemberwiseClone();
-    }
-
-    ICitadelRandom ICitadelRandom.Clone()
-    {
-        return Clone();
     }
 
     private static Xoshiro256State CreateStateJumpMagic()
