@@ -166,10 +166,10 @@ public sealed class Xoshiro256 : ICitadelRandom
 
         if (top != 0)
         {
-            for (var i = 0; i < 4; i++)
-            {
-                state[i] ^= CharacteristicPolynomial[i];
-            }
+            state.V1 ^= CharacteristicPolynomial.V1;
+            state.V2 ^= CharacteristicPolynomial.V2;
+            state.V3 ^= CharacteristicPolynomial.V3;
+            state.V4 ^= CharacteristicPolynomial.V4;
         }
     }
 
@@ -180,7 +180,7 @@ public sealed class Xoshiro256 : ICitadelRandom
         for (var k = 255; k >= 0; k--)
         {
             F2X_mulx(ref r);
-            if (((a[k >> 6] >> (k & 63)) & 1) != 0)
+            if (((GetWord(a, k >> 6) >> (k & 63)) & 1) != 0)
             {
                 r.V1 ^= b.V1;
                 r.V2 ^= b.V2;
@@ -216,7 +216,7 @@ public sealed class Xoshiro256 : ICitadelRandom
         for (var k = 255; k >= 0; k--)
         {
             F2X_mulmod(ref result, result);
-            if (((jump[k >> 6] >> (k & 63)) & 1) != 0)
+            if (((GetWord(jump, k >> 6) >> (k & 63)) & 1) != 0)
                 F2X_mulx(ref result);
         }
 
@@ -231,7 +231,7 @@ public sealed class Xoshiro256 : ICitadelRandom
         {
             for (var b = 0; b < 64; b++)
             {
-                if ((poly[i] & (1UL << b)) != 0)
+                if ((GetWord(poly, i) & (1UL << b)) != 0)
                 {
                     newState.V1 ^= _state.V1;
                     newState.V2 ^= _state.V2;
