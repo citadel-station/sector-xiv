@@ -20,15 +20,20 @@ We are happy to accept contributions from anybody. Get in Discord if you want to
 ### AI Policy
 
 AI is part of many developers' workflows; we don't want to wholesale ban a *tool*. That said, we do not accept
-low-effort pull requests under *any* context. Trying to flood the repository with 'slop' will result in being barred
-from
-the project.
+low-effort pull requests under *any* context. Trying to flood the repository with slop will result in being barred
+from the project.
 
-- **Art / Sprites**: We do not accept AI-generated **or assisted** visual assets of any kind.
+**As a rule of thumb, anything player-visible / facing should be made by a human.**
+
+- **Art / Sprites / Music**: We do not accept AI-generated **or assisted** visual / audio assets of any kind.
 - **Writing / Lore**: We do not accept AI writing in any form. This includes item
   descriptions. You're writing for humans to read, here.
 - **Code / Prototypes / Data**: We expect all code to be understood by the person submitting it. If you don't understand
   what the code does - *down to every single line* - you should not be trying to push it.
+- **Pull Requests / Repository**: Developers interact with other developers on the GitHub, not a LLM. AI is not allowed
+  for PRs / issues / comments.
+    - **AI reviews**: LLMs can sometimes catch errors, but if you want an AI review, **do it on local.** Do not do
+      something just because the AI said so either; always validate that it's actually giving sensical advice.
 
 ## Building
 
