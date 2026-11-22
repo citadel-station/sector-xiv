@@ -41,9 +41,8 @@ public static class CitadelRandomExtensions
             return raw & (bound - 1);
 
         // m ← x * s
-        var product = (UInt128)raw * bound;
         // l ← m mod 2^L
-        var low = ulong.CreateTruncating(product);
+        var result = Math.BigMul(raw, bound, out var low);
 
         // if l < s then
         if (low < bound)
@@ -56,14 +55,13 @@ public static class CitadelRandomExtensions
                 // x ← random integer in [0, 2^L)
                 raw = random.Next();
                 // m ← x * s
-                product = (UInt128)raw * bound;
                 // l ← m mod 2^L
-                low = ulong.CreateTruncating(product);
+                result = Math.BigMul(raw, bound, out low);
             }
         }
 
         // return m / 2^L
-        return ulong.CreateTruncating(product >> 64);
+        return result;
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]

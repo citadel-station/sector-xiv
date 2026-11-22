@@ -55,34 +55,6 @@ public sealed class CitadelRandomTests
     }
 
     [Test]
-    public void Typed128BitMethodsCoverTheFullSignedAndUnsignedRanges()
-    {
-        var source = new ScriptedRandom(
-            // first is high, second is low
-            0,
-            0,
-            long.MaxValue,
-            ulong.MaxValue,
-            1UL << 63,
-            0,
-            ulong.MaxValue,
-            ulong.MaxValue,
-            0,
-            0,
-            ulong.MaxValue,
-            ulong.MaxValue);
-        ICitadelRandom random = source;
-
-        Assert.That(random.NextI128(), Is.EqualTo(Int128.Zero));
-        Assert.That(random.NextI128(), Is.EqualTo(Int128.MaxValue));
-        Assert.That(random.NextI128(), Is.EqualTo(Int128.MinValue));
-        Assert.That(random.NextI128(), Is.EqualTo(-Int128.One));
-        Assert.That(random.NextU128(), Is.EqualTo(UInt128.Zero));
-        Assert.That(random.NextU128(), Is.EqualTo(UInt128.MaxValue));
-        Assert.That(source.DrawCount, Is.EqualTo(12));
-    }
-
-    [Test]
     public void FloatUses24BitsAndExcludesOne()
     {
         ICitadelRandom random = new ScriptedRandom(0, 1UL << 63, ulong.MaxValue);

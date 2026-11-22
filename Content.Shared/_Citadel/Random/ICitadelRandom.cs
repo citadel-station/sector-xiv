@@ -86,30 +86,6 @@ public interface ICitadelRandom : ICloneable
     /// Performs a uniform draw of [low, high)
     /// <br />
     /// <br />
-    /// This will draw from the generator twice, to produce an unbiased sample.
-    /// </summary>
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    Int128 NextI128()
-    {
-        return unchecked((Int128)NextU128());
-    }
-
-    /// <summary>
-    /// Performs a uniform draw of [low, high)
-    /// <br />
-    /// <br />
-    /// This will draw from the generator twice, to produce an unbiased sample.
-    /// </summary>
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    UInt128 NextU128()
-    {
-        return ((UInt128)Next() << 64) | Next();
-    }
-
-    /// <summary>
-    /// Performs a uniform draw of [low, high)
-    /// <br />
-    /// <br />
     /// This will draw from the generator an arbitrary number of times, to produce an unbiased sample.
     /// </summary>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
