@@ -1,5 +1,4 @@
 using System.Numerics;
-using System.Runtime.CompilerServices;
 using JetBrains.Annotations;
 
 namespace Content.Shared._Citadel.Random;
@@ -30,7 +29,6 @@ public sealed class Xoshiro256 : ICitadelRandom
         _state = new Xoshiro256State(splitMix.Next(), splitMix.Next(), splitMix.Next(), splitMix.Next());
     }
 
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public ulong Next()
     {
         var s0 = _state.V1;
@@ -134,7 +132,6 @@ public sealed class Xoshiro256 : ICitadelRandom
     }
 
     // ReSharper disable once IdentifierTypo
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static void F2X_mulx(ref Xoshiro256State state)
     {
         var carry = state.V4 >> 63;
@@ -152,7 +149,6 @@ public sealed class Xoshiro256 : ICitadelRandom
         }
     }
 
-    [MethodImpl(MethodImplOptions.NoInlining)]
     private static void F2X_mulmod(ref Xoshiro256State a, in Xoshiro256State b)
     {
         var r = new Xoshiro256State();
@@ -163,7 +159,6 @@ public sealed class Xoshiro256 : ICitadelRandom
         a = r;
     }
 
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static void F2X_mulmodWord(ulong word, in Xoshiro256State b, ref Xoshiro256State result)
     {
         for (var bit = 63; bit >= 0; bit--)
@@ -201,7 +196,6 @@ public sealed class Xoshiro256 : ICitadelRandom
         return result;
     }
 
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static void F2X_jumpPolyWord(ulong word, ref Xoshiro256State result)
     {
         for (var bit = 63; bit >= 0; bit--)
@@ -222,7 +216,6 @@ public sealed class Xoshiro256 : ICitadelRandom
         _state = newState;
     }
 
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private void AccumulateJumpWord(ulong word, ref Xoshiro256State result)
     {
         for (var bit = 0; bit < 64; bit++)

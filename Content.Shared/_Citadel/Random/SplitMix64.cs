@@ -18,7 +18,6 @@ public sealed class SplitMix64(ulong seed) : ICitadelRandom
     /// Generates a random 64-bit integer using the SplitMix64 algorithm.
     /// </summary>
     /// <returns></returns>
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public ulong Next()
     {
         _state += StateMagic; // increment the state variable

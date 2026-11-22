@@ -1,11 +1,9 @@
 using System.Numerics;
-using System.Runtime.CompilerServices;
 
 namespace Content.Shared._Citadel.Random;
 
 public static class CitadelRandomExtensions
 {
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal static long NextBoundedI64(ICitadelRandom random, long low, long high)
     {
         if (low > high)
@@ -16,7 +14,6 @@ public static class CitadelRandomExtensions
         return unchecked((long)((ulong)low + NextBoundedU64(random, width)));
     }
 
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal static ulong NextBoundedU64(ICitadelRandom random, ulong low, ulong high)
     {
         if (low > high)
@@ -24,7 +21,6 @@ public static class CitadelRandomExtensions
         return low + NextBoundedU64(random, high - low);
     }
 
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static ulong NextBoundedU64(ICitadelRandom random, ulong bound)
     {
         // Algorithm based off of
@@ -64,7 +60,6 @@ public static class CitadelRandomExtensions
         return result;
     }
 
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal static float NextBoundedFloat(ICitadelRandom random, float low, float high)
     {
         ValidateFloatingBounds(low, high);
@@ -74,7 +69,6 @@ public static class CitadelRandomExtensions
         return low == high ? low : ScaleFloating(low, high, sample);
     }
 
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal static double NextBoundedDouble(ICitadelRandom random, double low, double high)
     {
         ValidateFloatingBounds(low, high);
@@ -84,7 +78,6 @@ public static class CitadelRandomExtensions
         return low == high ? low : ScaleFloating(low, high, sample);
     }
 
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static void ValidateFloatingBounds<T>(T low, T high) where T : IFloatingPointIeee754<T>
     {
         if (!T.IsFinite(low))
@@ -96,7 +89,6 @@ public static class CitadelRandomExtensions
         }
     }
 
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static T ScaleFloating<T>(T low, T high, T sample) where T : IFloatingPointIeee754<T>
     {
         var width = high - low;

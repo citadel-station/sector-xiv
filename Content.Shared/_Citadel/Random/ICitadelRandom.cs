@@ -1,5 +1,3 @@
-using System.Runtime.CompilerServices;
-
 namespace Content.Shared._Citadel.Random;
 
 /// <summary>
@@ -31,7 +29,6 @@ public interface ICitadelRandom : ICloneable
     /// <summary>
     /// Performs a uniform draw of [low, high)
     /// </summary>
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     double NextDouble()
     {
         return (Next() >> 11) * (1.0 / (1UL << 53));
@@ -40,7 +37,6 @@ public interface ICitadelRandom : ICloneable
     /// <summary>
     /// Performs a uniform draw of [low, high)
     /// </summary>
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     float NextFloat()
     {
         return (Next() >> 40) * (1.0f / (1U << 24));
@@ -49,7 +45,6 @@ public interface ICitadelRandom : ICloneable
     /// <summary>
     /// Performs a uniform draw of [low, high)
     /// </summary>
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     int NextI32()
     {
         return unchecked((int)(Next() >> 32));
@@ -58,7 +53,6 @@ public interface ICitadelRandom : ICloneable
     /// <summary>
     /// Performs a uniform draw of [low, high)
     /// </summary>
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     uint NextU32()
     {
         return (uint)(Next() >> 32);
@@ -67,7 +61,6 @@ public interface ICitadelRandom : ICloneable
     /// <summary>
     /// Performs a uniform draw of [low, high)
     /// </summary>
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     long NextI64()
     {
         return unchecked((long)Next());
@@ -76,7 +69,6 @@ public interface ICitadelRandom : ICloneable
     /// <summary>
     /// Performs a uniform draw of [low, high)
     /// </summary>
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     ulong NextU64()
     {
         return Next();
@@ -88,7 +80,6 @@ public interface ICitadelRandom : ICloneable
     /// <br />
     /// This will draw from the generator an arbitrary number of times, to produce an unbiased sample.
     /// </summary>
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     long NextBoundedI64(long low, long high)
     {
         return CitadelRandomExtensions.NextBoundedI64(this, low, high);
@@ -100,7 +91,6 @@ public interface ICitadelRandom : ICloneable
     /// <br />
     /// This will draw from the generator an arbitrary number of times, to produce an unbiased sample.
     /// </summary>
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     ulong NextBoundedU64(ulong low, ulong high)
     {
         return CitadelRandomExtensions.NextBoundedU64(this, low, high);
@@ -109,7 +99,6 @@ public interface ICitadelRandom : ICloneable
     /// <summary>
     /// Performs a uniform draw of [low, high)
     /// </summary>
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     float NextBoundedFloat(float low, float high)
     {
         return CitadelRandomExtensions.NextBoundedFloat(this, low, high);
@@ -118,7 +107,6 @@ public interface ICitadelRandom : ICloneable
     /// <summary>
     /// Performs a uniform draw of [low, high)
     /// </summary>
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     double NextBoundedDouble(double low, double high)
     {
         return CitadelRandomExtensions.NextBoundedDouble(this, low, high);
