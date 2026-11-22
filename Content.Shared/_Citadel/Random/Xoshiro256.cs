@@ -143,9 +143,7 @@ public sealed class Xoshiro256 : ICitadelRandom
         state.V2 = (state.V2 << 1) | (state.V1 >> 63);
         state.V1 <<= 1;
 
-        var top = (int)carry;
-
-        if (top != 0)
+        if (carry != 0)
         {
             state.V1 ^= CharacteristicPolynomial.V1;
             state.V2 ^= CharacteristicPolynomial.V2;
